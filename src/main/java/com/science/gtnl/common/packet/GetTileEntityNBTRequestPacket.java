@@ -8,15 +8,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.WorldServer;
 
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
+import com.science.gtnl.common.packet.base.ServerboundPacket;
+
 import io.netty.buffer.ByteBuf;
 import lombok.Getter;
 
 @Getter
-public class GetTileEntityNBTRequestPacket
-    implements IMessage, IMessageHandler<GetTileEntityNBTRequestPacket, IMessage> {
+public class GetTileEntityNBTRequestPacket extends ServerboundPacket {
 
     public int x, y, z, blockID, blockMeta;
 
@@ -31,7 +29,7 @@ public class GetTileEntityNBTRequestPacket
     }
 
     @Override
-    public void fromBytes(ByteBuf buf) {
+    protected void read(ByteBuf buf) {
         this.x = buf.readInt();
         this.y = buf.readInt();
         this.z = buf.readInt();
@@ -40,7 +38,7 @@ public class GetTileEntityNBTRequestPacket
     }
 
     @Override
-    public void toBytes(ByteBuf buf) {
+    protected void write(ByteBuf buf) {
         buf.writeInt(this.x);
         buf.writeInt(this.y);
         buf.writeInt(this.z);
@@ -49,30 +47,20 @@ public class GetTileEntityNBTRequestPacket
     }
 
     @Override
-    public IMessage onMessage(GetTileEntityNBTRequestPacket message, MessageContext ctx) {
-        EntityPlayerMP player = ctx.getServerHandler().playerEntity;
+    public void handleServer(EntityPlayerMP player) {
         WorldServer world = player.getServerForPlayer();
-        int x = message.x;
-        int y = message.y;
-        int z = message.z;
         Block block = world.getBlock(x, y, z);
         if (block != null) {
             TileEntity tileentity = world.getTileEntity(x, y, z);
             if (tileentity != null) {
                 NBTTagCompound nbt = new NBTTagCompound();
-                try {
-                    tileentity.writeToNBT(nbt);
-                    nbt.removeTag("x");
-                    nbt.removeTag("y");
-                    nbt.removeTag("z");
+                tileentity.writeToNBT(nbt);
+                nbt.removeTag("x");
+                nbt.removeTag("y");
+                nbt.removeTag("z");
 
-                    network.sendTo(new TileEntityNBTPacket(message.blockID, message.blockMeta, nbt), player);
-
-                } catch (Throwable e) {
-                    e.printStackTrace();
-                }
+                network.sendTo(new TileEntityNBTPacket(blockID, blockMeta, nbt), player);
             }
         }
-        return null;
     }
 }

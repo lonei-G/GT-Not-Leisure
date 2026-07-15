@@ -8,17 +8,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 
+import com.science.gtnl.common.packet.base.ClientboundPacket;
 import com.science.gtnl.utils.item.ItemUtils;
 
 import cpw.mods.fml.common.network.ByteBufUtils;
-import cpw.mods.fml.common.network.simpleimpl.IMessage;
-import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
-import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import io.netty.buffer.ByteBuf;
 
-public class TileEntityNBTPacket implements IMessage, IMessageHandler<TileEntityNBTPacket, IMessage> {
+public class TileEntityNBTPacket extends ClientboundPacket {
 
     private int blockId;
     private int metadata;
@@ -33,24 +31,22 @@ public class TileEntityNBTPacket implements IMessage, IMessageHandler<TileEntity
     }
 
     @Override
-    public void fromBytes(ByteBuf buf) {
+    protected void read(ByteBuf buf) {
         this.blockId = buf.readInt();
         this.metadata = buf.readInt();
         this.nbt = ByteBufUtils.readTag(buf);
     }
 
     @Override
-    public void toBytes(ByteBuf buf) {
+    protected void write(ByteBuf buf) {
         buf.writeInt(this.blockId);
         buf.writeInt(this.metadata);
         ByteBufUtils.writeTag(buf, this.nbt);
     }
 
     @Override
-    public IMessage onMessage(TileEntityNBTPacket message, MessageContext ctx) {
-        if (ctx.side.isServer()) return null;
-        apply(message.blockId, message.metadata, message.nbt);
-        return null;
+    public void handleClient(Minecraft minecraft) {
+        apply(blockId, metadata, nbt);
     }
 
     @SideOnly(Side.CLIENT)

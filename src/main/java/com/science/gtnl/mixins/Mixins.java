@@ -106,6 +106,7 @@ public enum Mixins implements IMixins {
             "appliedEnergistics.assembler.MixinContainerInterfaceTerminal",
             "appliedEnergistics.MixinCraftingCPUCluster",
             "appliedEnergistics.AccessorTaskProgress",
+            "appliedEnergistics.AccessorSessionCraftCount",
             "appliedEnergistics.quamtumComputer.MixinCraftingCPUCluster",
             "appliedEnergistics.quamtumComputer.MixinCraftingGridCache",
             "bartwork.MixinItemRegistry",
@@ -131,6 +132,7 @@ public enum Mixins implements IMixins {
             "gregtech.MixinMTEBetterJukebox",
             "gregtech.MixinMTEForgeOfGods",
             "gregtech.MixinMTEHatch",
+            "gregtech.MixinMTEHatchOutputMEBase",
             "gregtech.MixinMTEHatchOutputBusME",
             "gregtech.MixinMTEHatchOutputME",
             "gregtech.MixinMTEHatchAirIntake",
@@ -216,17 +218,11 @@ public enum Mixins implements IMixins {
         .addCommonMixins(
             "randomComplement.MixinAEBaseContainer",
             "randomComplement.MixinBlockCraftingUnit",
-            "randomComplement.MixinContainerCraftAmount",
-            "randomComplement.MixinContainerCraftConfirm",
             "randomComplement.MixinContainerMEMonitorable",
             "randomComplement.MixinGuiBridge",
             "randomComplement.MixinQuantumCluster",
             "randomComplement.MixinTileQuantumBridge",
             "randomComplement.MixinWirelessTerminalGuiObject")
-        .addClientMixins(
-            "randomComplement.MixinGuiAmount",
-            "randomComplement.MixinGuiCraftAmount",
-            "randomComplement.MixinGuiCraftConfirm")
         .setPhase(Phase.LATE)),
 
     OVERPOWERED_CHANGE(new MixinBuilder("Overpowered Mixin Changes")

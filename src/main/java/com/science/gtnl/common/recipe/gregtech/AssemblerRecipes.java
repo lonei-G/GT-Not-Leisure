@@ -287,7 +287,7 @@ public class AssemblerRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(17),
-                GregtechItemList.Industrial_Cryogenic_Freezer.get(4),
+                ItemList.CryogenicFreezer.get(4),
                 GregtechItemList.Casing_AdvancedVacuum.get(4),
                 GTOreDictUnificator.get(OrePrefixes.cableGt04, Materials.HSSE, 16L),
                 ItemList.Electric_Motor_IV.get(16L),
@@ -1100,7 +1100,7 @@ public class AssemblerRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(17),
-                ItemList.PyrolyseOven.get(1),
+                ItemList.PyrolyzeOven.get(1),
                 ItemList.Field_Generator_HV.get(2L),
                 GTOreDictUnificator.get(OrePrefixes.pipeHuge, Materials.StainlessSteel, 2L),
                 GTOreDictUnificator.get(OrePrefixes.plateDouble, Materials.StainlessSteel, 4L))
@@ -1493,7 +1493,7 @@ public class AssemblerRecipes implements IRecipePool {
         RecipeBuilder.builder()
             .itemInputs(
                 GTUtility.getIntegratedCircuit(17),
-                GregtechItemList.Amazon_Warehouse_Controller.get(1),
+                ItemList.IndustrialPackager.get(1),
                 GTOreDictUnificator.get(OrePrefixes.circuit, Materials.IV, 2L),
                 GregtechItemList.Casing_AmazonWarehouse.get(4),
                 MaterialsAlloy.HASTELLOY_C276.getPlateDouble(4),
@@ -1853,7 +1853,7 @@ public class AssemblerRecipes implements IRecipePool {
 
         RecipeBuilder.builder()
             .itemInputs(
-                GTUtility.getIntegratedCircuit(3),
+                GTUtility.getIntegratedCircuit(6),
                 new ItemStack(Blocks.torch, 64),
                 new ItemStack(Blocks.torch, 64),
                 new ItemStack(Blocks.torch, 64),
@@ -3733,7 +3733,7 @@ public class AssemblerRecipes implements IRecipePool {
             .itemInputs(
                 CropsNHItemList.CropManager_LV.get(2),
                 new ItemStack(Blocks.dirt, 64),
-                GTModHandler.getModItem(Mods.IndustrialCraft2.ID, "blockCrop", 64),
+                CropsNHItemList.cropSticks.get(64),
                 GTModHandler.getModItem(Mods.Forestry.ID, "ffarm", 16, 4),
                 GTModHandler.getModItem(Mods.Forestry.ID, "ffarm", 16, 2),
                 GTModHandler.getModItem(Mods.Forestry.ID, "ffarm", 4, 5))
